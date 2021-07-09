@@ -1,13 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_sns_login/src/pages/home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' ;
-
-
-
+import 'package:kakao_sample_profile/src/pages/home.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +15,12 @@ class App extends StatelessWidget {
             child: Text("Firebase load fail"),
           );
         }
-        if(snapshot.connectionState == ConnectionState.done){
+        if (snapshot.connectionState == ConnectionState.done) {
           return Home();
         }
-        return CircularProgressIndicator();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }

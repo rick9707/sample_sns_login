@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sample_sns_login/src/pages/home.dart';
-import 'package:sample_sns_login/src/pages/login.dart';
-import 'package:sample_sns_login/src/app1.dart';
+import 'package:get/get.dart';
+import 'package:kakao_sample_profile/src/app.dart';
+import 'package:kakao_sample_profile/src/controller/image_crop_controller.dart';
+import 'package:kakao_sample_profile/src/controller/profile_controller.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+    return GetMaterialApp(
+      title: 'ImageCropper',
+      theme: ThemeData.light().copyWith(primaryColor: Colors.white),
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut<ProfileController>(() => ProfileController());
+        Get.lazyPut<ImageCropController>(() => ImageCropController());
+      }),
       home: App(),
     );
   }
 }
-
