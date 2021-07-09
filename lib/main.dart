@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample_sns_login/pages/home.dart';
-import 'package:sample_sns_login/pages/login.dart';
+import 'package:sample_sns_login/src/pages/home.dart';
+import 'package:sample_sns_login/src/pages/login.dart';
 import 'package:sample_sns_login/src/app1.dart';
 
 void main() {

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_sns_login/pages/home.dart';
+import 'package:sample_sns_login/src/pages/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
 
 
