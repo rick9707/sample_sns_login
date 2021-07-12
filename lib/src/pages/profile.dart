@@ -1,3 +1,6 @@
+
+import 'package:path/path.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kakao_sample_profile/src/components/text_editor_widget.dart';
@@ -46,25 +49,13 @@ class Profile extends GetView<ProfileController> {
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.close_sharp, color: Colors.white),
-                    Row(
-                      children: [
-                        Icon(Icons.qr_code, color: Colors.white),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.settings, color: Colors.white)
-                      ],
-                    )
-                  ],
                 ),
         ),
       ),
     );
   }
 
-  Widget _backgroundImage() {
+  Widget _backgroundImage(BuildContext context) {
     return Positioned(
       top: 0,
       right: 0,
@@ -73,6 +64,10 @@ class Profile extends GetView<ProfileController> {
       child: GestureDetector(
         onTap: () {
           controller.pickImage(ProfileImageType.BACKGROUND);
+          print("backgorund");
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return DetailScreen();
+          }));
         },
         child: Obx(
           () => Opacity(
@@ -146,10 +141,9 @@ class Profile extends GetView<ProfileController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _oneButton(Icons.chat_bubble, "나와의 채팅", () {}),
                     _oneButton(
                         Icons.edit, "프로필 편집", controller.toggleEditProfile),
-                    _oneButton(Icons.chat_bubble_outline, "카카오스토리", () {}),
+                    _oneButton(Icons.chat_bubble_outline, "로그아웃", FirebaseAuth.instance.signOut),
                   ],
                 ),
               ),
@@ -181,6 +175,7 @@ class Profile extends GetView<ProfileController> {
   Widget _profileImage() {
     return GestureDetector(
       onTap: () {
+        print('profile');
         controller.pickImage(ProfileImageType.THUMBNAIL);
       },
       child: Container(
@@ -346,11 +341,48 @@ class Profile extends GetView<ProfileController> {
       body: Container(
         child: Stack(
           children: [
-            _backgroundImage(),
+            _backgroundImage(context),
             _header(),
             _myProfile(),
             _footer(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class DetailScreen extends GetView<ProfileController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Image.network(
+            controller.myProfile.value.backgroundUrl,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailProfile extends GetView<ProfileController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Image.network(
+            controller.myProfile.value.avatarUrl,
+          ),
         ),
       ),
     );
