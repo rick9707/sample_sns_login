@@ -1,4 +1,5 @@
 
+
 import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -172,11 +173,14 @@ class Profile extends GetView<ProfileController> {
           );
   }
 
-  Widget _profileImage() {
+  Widget _profileImage(BuildContext context) {
     return GestureDetector(
       onTap: () {
         print('profile');
         controller.pickImage(ProfileImageType.THUMBNAIL);
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return DetailProfile();
+        }));
       },
       child: Container(
         width: 120,
@@ -312,7 +316,7 @@ class Profile extends GetView<ProfileController> {
     );
   }
 
-  Widget _myProfile() {
+  Widget _myProfile(BuildContext context) {
     return Positioned(
       bottom: 120,
       left: 0,
@@ -322,7 +326,7 @@ class Profile extends GetView<ProfileController> {
         child: Obx(
           () => Column(
             children: [
-              _profileImage(),
+              _profileImage(context),
               controller.isEditMyProfile.value
                   ? _editProfileInfo()
                   : _profileInfo(),
@@ -343,7 +347,7 @@ class Profile extends GetView<ProfileController> {
           children: [
             _backgroundImage(context),
             _header(),
-            _myProfile(),
+            _myProfile(context),
             _footer(),
           ],
         ),
